@@ -1,0 +1,81 @@
+/*
+ *  cairo_drawing_context.cpp
+ *  =========================
+ *  Copyright 2013 Paul Griffiths
+ *  Email: mail@paulgriffiths.net
+ *
+ *  Implementation of Cairo drawing context
+ *
+ *  Distributed under the terms of the GNU General Public License.
+ *  http://www.gnu.org/licenses/
+ */
+
+#include <string>
+#include <cairommconfig.h>
+#include <cairomm/context.h>
+#include <cairomm/surface.h>
+#include "cairo_drawing_context.h"
+
+using namespace jcalc;
+
+CairoDrawingContext::CairoDrawingContext(const std::string& filename,
+                                         const int width,
+                                         const int height) :
+    DrawingContext(filename, width, height),
+    m_cr(0) {
+    Cairo::RefPtr<Cairo::PdfSurface> surface =
+        Cairo::PdfSurface::create(filename, width, height);
+    m_cr = Cairo::Context::create(surface);
+}
+
+CairoDrawingContext::~CairoDrawingContext() {
+}
+
+void CairoDrawingContext::show_page() {
+    m_cr->show_page();
+}
+
+void CairoDrawingContext::save() {
+    m_cr->save();
+}
+
+void CairoDrawingContext::restore() {
+    m_cr->restore();
+}
+
+void CairoDrawingContext::set_line_width(const double width) {
+    m_cr->set_line_width(width);
+}
+
+void CairoDrawingContext::set_color(const RGB& rgb) {
+    m_cr->set_source_rgb(rgb.red, rgb.green, rgb.blue);
+}
+
+void CairoDrawingContext::set_color_alpha(const RGBA& rgba) {
+    m_cr->set_source_rgba(rgba.red, rgba.green, rgba.blue, rgba.alpha);
+}
+
+void CairoDrawingContext::move_to(const Point& pt) {
+    m_cr->move_to(pt.x, pt.y);
+}
+
+void CairoDrawingContext::line_to(const Point& pt) {
+    m_cr->line_to(pt.x, pt.y);
+}
+
+void CairoDrawingContext::stroke() {
+    m_cr->stroke();
+}
+
+void CairoDrawingContext::rectangle(const Point& topleft,
+                                    const Point& bottomright) {
+    m_cr->rectangle(topleft.x, topleft.y,
+                    bottomright.x - topleft.x,
+                    bottomright.y - topleft.y);
+}
+
+void CairoDrawingContext::rectangle(const Point& topleft,
+                                    const double width,
+                                    const double height) {
+    m_cr->rectangle(topleft.x, topleft.y, width, height);
+}
