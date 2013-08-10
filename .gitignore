@@ -16,3 +16,6 @@ unittests
 
 # Output files
 outfile
+
+# Temporary files
+*.swp

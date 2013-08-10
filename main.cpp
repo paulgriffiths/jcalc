@@ -13,10 +13,31 @@
 #include <iostream>
 #include "jcalc.h"
 
+void do_drawing();
+
 int main(void) {
-    jcalc::CairoDrawingContext cdc("outfile", 400, 600);
-    jcalc::Page page(cdc);
     std::cout << "Main is running." << std::endl;
-    page.show_page();
+    try {
+        do_drawing();
+    } catch(jcalc::jcalc_exception& e) {
+        std::cerr << e.what() << std::endl;
+        return 1;
+    }
+
     return 0;
+}
+
+void do_drawing() {
+    //jcalc::PDC pdc(jcalc::drawing_context_factory(
+    //        jcalc::DrawingContext::Backend::null,
+    //        jcalc::DrawingContext::Output::pdf,
+    //        "outfile", 400, 600));
+
+    jcalc::PDC pdc(jcalc::drawing_context_factory(
+           jcalc::DrawingContext::Backend::cairo,
+            jcalc::DrawingContext::Output::pdf,
+            "outfile", 400, 600));
+
+    jcalc::Page page(pdc);
+    page.show_page();
 }

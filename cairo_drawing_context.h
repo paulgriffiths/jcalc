@@ -24,7 +24,8 @@ namespace jcalc {
 
 class CairoDrawingContext : public DrawingContext {
     public:
-        explicit CairoDrawingContext(const std::string& filename,
+        explicit CairoDrawingContext(Cairo::RefPtr<Cairo::Surface> surface,
+                                     const std::string& filename,
                                      const int width,
                                      const int height);
         virtual ~CairoDrawingContext();
@@ -46,6 +47,7 @@ class CairoDrawingContext : public DrawingContext {
         virtual void stroke();
 
     private:
+        Cairo::RefPtr<Cairo::Surface> m_surface;
         Cairo::RefPtr<Cairo::Context> m_cr;
 };
 

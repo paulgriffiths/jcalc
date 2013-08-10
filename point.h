@@ -12,7 +12,7 @@
 
 
 #ifndef PG_JCALC_POINT_H
-#define PG_JCALC_POINT_G
+#define PG_JCALC_POINT_H
 
 namespace jcalc {
 

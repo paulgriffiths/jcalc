@@ -15,6 +15,7 @@
 #define PG_JCALC_DRAWING_CONTEXT_H
 
 #include <string>
+#include <memory>
 #include "jcalc_common_types.h"
 
 namespace jcalc {
@@ -44,12 +45,23 @@ class DrawingContext {
         double height() const;
         virtual void show_page() = 0;
 
+        enum class Backend {null, cairo};
+        enum class Output {pdf, svg, png};
+
     private:
         const std::string m_filename;
         const int m_width;
         const int m_height;
 };
 
-}
+typedef std::shared_ptr<DrawingContext> PDC;
+
+PDC drawing_context_factory(const DrawingContext::Backend backend,
+                            const DrawingContext::Output output,
+                            const std::string& filename,
+                            const int width,
+                            const int height);
+
+}           //  namespace jcalc
 
 #endif          // PG_JCALC_DRAWING_CONTEXT_H

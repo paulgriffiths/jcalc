@@ -12,6 +12,7 @@
 
 #include <string>
 #include "drawing_context.h"
+#include "contexts.h"
 
 using namespace jcalc;
 
@@ -33,3 +34,31 @@ double DrawingContext::width() const {
 double DrawingContext::height() const {
     return m_height;
 }
+
+PDC jcalc::drawing_context_factory(const DrawingContext::Backend backend,
+                                   const DrawingContext::Output output,
+                                   const std::string& filename,
+                                   const int width,
+                                   const int height) {
+    switch ( backend ) {
+        case DrawingContext::Backend::null:
+            return PDC(new NullDrawingContext(filename, width, height));
+
+        case DrawingContext::Backend::cairo:
+            switch ( output ) {
+                case DrawingContext::Output::pdf:
+                    return PDC(new CairoPDFDrawingContext(filename,
+                                                          width,
+                                                          height));
+
+                case DrawingContext::Output::svg:
+                    throw unsupported_output("svg");
+
+                case DrawingContext::Output::png:
+                    throw unsupported_output("png");
+            }
+    }
+
+    return 0;
+}
+

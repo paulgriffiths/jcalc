@@ -20,12 +20,12 @@ namespace jcalc {
 
 class Page {
     public:
-        explicit Page(DrawingContext& dc);
+        explicit Page(PDC dc);
 
         void show_page();
 
     private:
-        DrawingContext& m_dc;
+        PDC m_dc;
 };
 
 }           //  namespace jcalc

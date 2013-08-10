@@ -14,9 +14,8 @@
 #ifndef PG_JCALC_H
 #define PG_JCALC_H
 
-#include "jcalc_common_types.h"
+#include "jcalc_exceptions.h"
 #include "drawing_context.h"
-#include "cairo_drawing_context.h"
 #include "page.h"
 
 #endif          // PG_JCALC_H

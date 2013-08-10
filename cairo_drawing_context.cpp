@@ -18,14 +18,13 @@
 
 using namespace jcalc;
 
-CairoDrawingContext::CairoDrawingContext(const std::string& filename,
+CairoDrawingContext::CairoDrawingContext(Cairo::RefPtr<Cairo::Surface> surface,
+                                         const std::string& filename,
                                          const int width,
                                          const int height) :
     DrawingContext(filename, width, height),
-    m_cr(0) {
-    Cairo::RefPtr<Cairo::PdfSurface> surface =
-        Cairo::PdfSurface::create(filename, width, height);
-    m_cr = Cairo::Context::create(surface);
+    m_surface(surface),
+    m_cr(Cairo::Context::create(m_surface)) {
 }
 
 CairoDrawingContext::~CairoDrawingContext() {

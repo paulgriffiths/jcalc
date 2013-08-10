@@ -14,6 +14,7 @@
 #ifndef PG_JCALC_COMMON_TYPES_H
 #define PG_JCALC_COMMON_TYPES_H
 
+#include "jcalc_exceptions.h"
 #include "colors.h"
 #include "point.h"
 

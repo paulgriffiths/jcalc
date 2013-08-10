@@ -18,7 +18,7 @@ TESTOUT=unittests
 CXX=g++
 
 # Compiler flags
-CXXFLAGS=-std=c++98 -pedantic -Wall -Wextra -Weffc++
+CXXFLAGS=-std=c++11 -pedantic -Wall -Wextra -Weffc++
 CXX_POSIX_FLAGS=-Wall -Wextra -Weffc++
 CXX_DEBUG_FLAGS=-ggdb -DDEBUG -DDEBUG_ALL
 CXX_RELEASE_FLAGS=-O3 -DNDEBUG
@@ -38,6 +38,7 @@ MAINOBJ=main.o
 TESTMAINOBJ=tests/unittests.o
 
 OBJS=page.o drawing_context.o cairo_drawing_context.o colors.o
+OBJS+=cairo_pdf_drawing_context.o
 
 TESTOBJS=
 
@@ -121,10 +122,14 @@ colors.o: colors.cpp colors.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 drawing_context.o: drawing_context.cpp drawing_context.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 cairo_drawing_context.o: cairo_drawing_context.cpp \
 	cairo_drawing_context.h drawing_context.h
+	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+
+cairo_pdf_drawing_context.o: cairo_pdf_drawing_context.cpp \
+	cairo_pdf_drawing_context.h drawing_context.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 
