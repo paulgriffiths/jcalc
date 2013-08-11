@@ -4,7 +4,7 @@
  *  Copyright 2013 Paul Griffiths
  *  Email: mail@paulgriffiths.net
  *
- *  Interface to drawing context.
+ *  Interface to drawing context abstract base class.
  *
  *  Distributed under the terms of the GNU General Public License.
  *  http://www.gnu.org/licenses/
@@ -61,6 +61,8 @@ class DrawingContext {
         double height() const;
         virtual void show_page() = 0;
 
+        //  Enumerations for factory function
+
         enum class Backend {null, cairo};
         enum class Output {pdf, svg, png};
 
@@ -70,7 +72,17 @@ class DrawingContext {
         const int m_height;
 };
 
+
+/*
+ *  Typedef for polymorphic std::shared_ptr to a drawing context.
+ */
+
 typedef std::shared_ptr<DrawingContext> PDC;
+
+
+/*
+ *  Standalone factory function for creating drawing contexts.
+ */
 
 PDC drawing_context_factory(const DrawingContext::Backend backend,
                             const DrawingContext::Output output,

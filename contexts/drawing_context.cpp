@@ -17,6 +17,11 @@
 
 using namespace jcalc;
 
+
+/*
+ *  Constructor.
+ */
+
 DrawingContext::DrawingContext(const std::string& filename,
                                const int width,
                                const int height) :
@@ -25,16 +30,47 @@ DrawingContext::DrawingContext(const std::string& filename,
     m_height(height) {
 }
 
+
+/*
+ *  Provide definition for virtual destructor.
+ */
+
 DrawingContext::~DrawingContext() {
 }
+
+
+/*
+ *  Returns the width of the drawing context.
+ */
 
 double DrawingContext::width() const {
     return m_width;
 }
 
+
+/*
+ *  Returns the height of the drawing context.
+ */
+
 double DrawingContext::height() const {
     return m_height;
 }
+
+
+/*
+ *  Standalone factory function for creating new drawing contexts.
+ *
+ *  Arguments:
+ *    backend - the requested backend, e.g. 'cairo'
+ *    output - the requested for of output, e.g. 'pdf', 'svg'
+ *    filename - the name of the output file to be created.
+ *    width - desired width of the drawing context.
+ *    height - desired height of the drawing context.
+ *
+ *  Returns:
+ *    A std::shared_ptr<DrawingContext> pointing at the newly created
+ *    drawing context.
+ */
 
 PDC jcalc::drawing_context_factory(const DrawingContext::Backend backend,
                                    const DrawingContext::Output output,
@@ -62,6 +98,7 @@ PDC jcalc::drawing_context_factory(const DrawingContext::Backend backend,
             }
     }
 
-    return 0;
-}
+    //  We shouldn't ever get here, but just in case.
 
+    return nullptr;
+}

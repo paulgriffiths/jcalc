@@ -19,6 +19,11 @@
 
 namespace jcalc {
 
+/*
+ *  Struct for containing information about a pipe bend
+ *  necessary for drawing it.
+ */
+
 struct PipeBendInfo {
     const double bend_angle;
     const double segment_angle;
@@ -42,6 +47,11 @@ struct PipeBendInfo {
         casing_od(casing_od), casing_id(casing_id),
         lining_od(lining_od), lining_id(lining_id) {}
 };
+
+
+/*
+ *  Pipe bend drawn object class.
+ */
 
 class PipeBend : public DrawnObject {
     public:

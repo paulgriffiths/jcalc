@@ -15,8 +15,8 @@
 
 void do_drawing();
 
+
 int main(void) {
-    std::cout << "Main is running." << std::endl;
     try {
         do_drawing();
     } catch(jcalc::jcalc_exception& e) {
@@ -24,20 +24,23 @@ int main(void) {
         return 1;
     }
 
+    std::cout << "Drawing successfully created." << std::endl;
+
     return 0;
 }
 
-void do_drawing() {
-    //jcalc::PDC pdc(jcalc::drawing_context_factory(
-    //        jcalc::DrawingContext::Backend::null,
-    //        jcalc::DrawingContext::Output::pdf,
-    //        "outfile", 400, 600));
 
+/*
+ *  Temporary function for testing purposes, ultimately the type
+ *  of object drawn and the parameters thereto will be obtained
+ *  from the command line or a configuration file.
+ */
+
+void do_drawing() {
     jcalc::PDC pdc(jcalc::drawing_context_factory(
             jcalc::DrawingContext::Backend::cairo,
             jcalc::DrawingContext::Output::svg,
             "outfile.svg", 612, 792));
-
     jcalc::Page page(pdc);
     page.show_page();
 }

@@ -4,7 +4,7 @@
  *  Copyright 2013 Paul Griffiths
  *  Email: mail@paulgriffiths.net
  *
- *  Interface to drawn segmented bend.
+ *  Interface to drawn segmented bend class.
  *
  *  Distributed under the terms of the GNU General Public License.
  *  http://www.gnu.org/licenses/
@@ -18,6 +18,11 @@
 #include "drawn_object.h"
 
 namespace jcalc {
+
+/*
+ *  Struct to contain information about a segmented bend
+ *  necessary to draw it.
+ */
 
 struct SegBendInfo {
     double bend_angle;
@@ -33,6 +38,11 @@ struct SegBendInfo {
         bend_angle(bend_angle), segment_angle(segment_angle),
         bend_radius(bend_radius), pipe_radius(pipe_radius) {}
 };
+
+
+/*
+ *  Segmented bend class.
+ */
 
 class SegmentedBend : public DrawnObject {
     public:

@@ -18,8 +18,8 @@
 
 namespace jcalc {
 
-//  Base exception, all custom exceptions thrown by this module
-//  are derived from CmdLineException
+//  Base exception, all custom exceptions thrown by this application
+//  are derived from jcalc_exception.
 
 class jcalc_exception {
     private:

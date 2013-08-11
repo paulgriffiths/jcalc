@@ -28,6 +28,6 @@ class CairoSVGDrawingContext : public CairoDrawingContext {
         virtual ~CairoSVGDrawingContext();
 };
 
-}
+}           //  namespace jcalc
 
 #endif          // PG_JCALC_CAIRO_SVG_DRAWING_CONTEXT_H

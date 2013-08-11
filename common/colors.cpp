@@ -14,6 +14,10 @@
 
 using namespace jcalc;
 
+/*
+ *  Define static RGB struct members for stock colors.
+ */
+
 const RGB RGB::stock_AliceBlue(0.941176, 0.972549, 1.0);
 const RGB RGB::stock_AntiqueWhite(0.980392, 0.921569, 0.843137);
 const RGB RGB::stock_Aqua(0.0, 1.0, 1.0);

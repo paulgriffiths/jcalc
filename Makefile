@@ -122,7 +122,9 @@ check:
 
 # Main executable
 main: $(MAINOBJ) $(OBJS)
-	$(CXX) -o $(OUT) $(MAINOBJ) $(OBJS) $(LDFLAGS) 
+	@echo "Linking $(OUT)..."
+	@$(CXX) -o $(OUT) $(MAINOBJ) $(OBJS) $(LDFLAGS) 
+	@echo "Done."
 
 # Unit tests executable
 testmain: $(TESTMAINOBJ) $(TESTOBJS) $(OBJS)
@@ -136,34 +138,41 @@ testmain: $(TESTMAINOBJ) $(TESTOBJS) $(OBJS)
 
 main.o: main.cpp jcalc.h context.h page.h contexts/drawing_context.h \
 	common/jcalc_exceptions.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 page.o: page.cpp page.h context.h contexts/drawing_context.h \
 	drawns/pipe_bend.h drawns/drawn_object.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 common/point.o: common/point.cpp common/point.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 common/colors.o: common/colors.cpp common/colors.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 drawns/drawn_object.o: drawns/drawn_object.cpp drawns/drawn_object.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 drawns/segmented_bend.o: drawns/segmented_bend.cpp drawns/segmented_bend.h \
 	drawns/drawn_object.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 drawns/pipe_bend.o: drawns/pipe_bend.cpp drawns/pipe_bend.h \
 	drawns/segmented_bend.h drawns/drawn_object.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 contexts/drawing_context.o: contexts/drawing_context.cpp \
 	contexts/drawing_context.h contexts/null_drawing_context.h \
@@ -171,33 +180,38 @@ contexts/drawing_context.o: contexts/drawing_context.cpp \
 	contexts/cairo_svg_drawing_context.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 contexts/null_drawing_context.o: contexts/null_drawing_context.cpp \
 	contexts/null_drawing_context.h contexts/drawing_context.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 contexts/cairo_drawing_context.o: contexts/cairo_drawing_context.cpp \
 	contexts/cairo_drawing_context.h contexts/drawing_context.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 contexts/cairo_pdf_drawing_context.o: contexts/cairo_pdf_drawing_context.cpp \
 	contexts/cairo_pdf_drawing_context.h contexts/cairo_drawing_context.h \
 	contexts/drawing_context.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 contexts/cairo_svg_drawing_context.o: contexts/cairo_svg_drawing_context.cpp \
 	contexts/cairo_svg_drawing_context.h contexts/cairo_drawing_context.h \
 	contexts/drawing_context.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 
 # Unit tests

@@ -19,12 +19,22 @@
 
 using namespace jcalc;
 
+
+/*
+ *  Constructor.
+ */
+
 CairoSVGDrawingContext::CairoSVGDrawingContext(const std::string& filename,
                                                const int width,
                                                const int height) :
     CairoDrawingContext(Cairo::SvgSurface::create(filename, width, height),
                         filename, width, height) {
 }
+
+
+/*
+ *  Destructor.
+ */
 
 CairoSVGDrawingContext::~CairoSVGDrawingContext() {
 }

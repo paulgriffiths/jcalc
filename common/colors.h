@@ -16,6 +16,14 @@
 
 namespace jcalc {
 
+/*
+ *  Struct for holding an RGB color tuple.
+ *
+ *  Also defines a number of stock colors represented as RGB structs,
+ *  the colors being those defined in the HTML and CSS color
+ *  specification.
+ */
+
 struct RGB {
     double red;
     double green;
@@ -168,6 +176,11 @@ struct RGB {
     static const RGB stock_YellowGreen;
 };
 
+
+/*
+ *  Struct for RGB tuple plus alpha (transparency) information.
+ */
+
 struct RGBA {
     double red;
     double green;
@@ -175,7 +188,7 @@ struct RGBA {
     double alpha;
 
     RGBA() :
-        red(0), green(0), blue(0), alpha(0) {}
+        red(0), green(0), blue(0), alpha(1) {}
     RGBA(const RGB& rgb, const double alpha) :
         red(rgb.red), green(rgb.green),
         blue(rgb.blue), alpha(alpha) {}

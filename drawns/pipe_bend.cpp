@@ -18,6 +18,11 @@
 
 using namespace jcalc;
 
+
+/*
+ *  Constructor.
+ */
+
 PipeBend::PipeBend(PDC dc, const Point& origin,
                    const double width, const double height,
                    const PipeBendInfo& pbi) :
@@ -25,12 +30,24 @@ PipeBend::PipeBend(PDC dc, const Point& origin,
     m_pbi(pbi) {
 }
 
+
+/*
+ *  Destructor.
+ */
+
 PipeBend::~PipeBend() {
 }
+
+
+/*
+ *  Virtual draw_internal() function.
+ */
 
 void PipeBend::draw_internal(PDC dc) {
     SegBendInfo sbi(m_pbi.bend_angle, m_pbi.segment_angle,
                     m_pbi.nominal_radius, m_pbi.casing_od / 2);
+
+    //  Set up colors and radii for the four "components"
 
     const double rads[] = {m_pbi.casing_od / 2,
                            m_pbi.casing_id / 2,
@@ -40,6 +57,8 @@ void PipeBend::draw_internal(PDC dc) {
                           RGB::stock_LightGray,
                           RGB::stock_Bisque,
                           RGB::stock_White};
+
+    //  Draw them
 
     for ( int i = 0; i < 4; ++i ) {
         sbi.pipe_radius = rads[i];
@@ -51,11 +70,22 @@ void PipeBend::draw_internal(PDC dc) {
         section_outline.draw();
     }
                 
+    //  Draw the overall bend outline. Draw last to avoid the drawing
+    //  of the other components interfering with it.
+
     sbi.pipe_radius = m_pbi.casing_od / 2;
     SegmentedBend bend_outline(dc, Point(0, height()), sbi,
                                RGB::stock_Black, false, true);
     bend_outline.draw();
 }
+
+
+/*
+ *  Virtual scaling function.
+ *
+ *  This function is currently very rudimentary while the class
+ *  is being developed.
+ */
 
 void PipeBend::scale(PDC dc, const double width, const double height) {
     const double extent = m_pbi.nominal_radius +
@@ -64,4 +94,3 @@ void PipeBend::scale(PDC dc, const double width, const double height) {
     const double s_factor = s_extent / extent;
     set_scale(s_factor, s_factor);
 }
-

@@ -19,12 +19,22 @@
 
 using namespace jcalc;
 
+
+/*
+ *  Constructor.
+ */
+
 CairoPDFDrawingContext::CairoPDFDrawingContext(const std::string& filename,
                                                const int width,
                                                const int height) :
     CairoDrawingContext(Cairo::PdfSurface::create(filename, width, height),
                         filename, width, height) {
 }
+
+
+/*
+ *  Destructor.
+ */
 
 CairoPDFDrawingContext::~CairoPDFDrawingContext() {
 }

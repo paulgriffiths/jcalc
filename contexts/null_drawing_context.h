@@ -6,6 +6,9 @@
  *
  *  Interface to a do-nothing drawing context.
  *
+ *  This may be used for test purposes, to allow the application to
+ *  'write' to a drawing context which does nothing.
+ *
  *  Distributed under the terms of the GNU General Public License.
  *  http://www.gnu.org/licenses/
  */
@@ -23,14 +26,14 @@ namespace jcalc {
 class NullDrawingContext : public DrawingContext {
     public:
         explicit NullDrawingContext(const std::string& filename,
-                                const int width,
-                                const int height) :
+                                    const int width,
+                                    const int height) :
             DrawingContext(filename, width, height) {}
         virtual ~NullDrawingContext() {};
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
-        //  Ignore GCCs -Wunused-parameter warnings, since tihs
+        //  Ignore GCC's -Wunused-parameter warnings, since tihs
         //  is a deliberate "do-nothing" class.
 
         virtual void save() {};
@@ -67,6 +70,6 @@ class NullDrawingContext : public DrawingContext {
 
 };
 
-}
+}           //  namespace jcalc
 
 #endif          // PG_JCALC_NULL_DRAWING_CONTEXT_H

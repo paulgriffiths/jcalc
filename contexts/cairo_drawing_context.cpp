@@ -19,6 +19,11 @@
 
 using namespace jcalc;
 
+
+/*
+ *  Constructor.
+ */
+
 CairoDrawingContext::CairoDrawingContext(Cairo::RefPtr<Cairo::Surface> surface,
                                          const std::string& filename,
                                          const int width,
@@ -28,8 +33,18 @@ CairoDrawingContext::CairoDrawingContext(Cairo::RefPtr<Cairo::Surface> surface,
     m_cr(Cairo::Context::create(m_surface)) {
 }
 
+
+/*
+ *  Destructor.
+ */
+
 CairoDrawingContext::~CairoDrawingContext() {
 }
+
+
+/*
+ *  Virtual drawing member functions.
+ */
 
 void CairoDrawingContext::show_page() {
     m_cr->show_page();

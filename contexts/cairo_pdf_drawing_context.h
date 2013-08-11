@@ -28,6 +28,6 @@ class CairoPDFDrawingContext : public CairoDrawingContext {
         virtual ~CairoPDFDrawingContext();
 };
 
-}
+}           //  namespace jcalc
 
 #endif          // PG_JCALC_CAIRO_PDF_DRAWING_CONTEXT_H

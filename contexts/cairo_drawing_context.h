@@ -55,6 +55,7 @@ class CairoDrawingContext : public DrawingContext {
                          const double start_degrees,
                          const double end_degrees,
                          const bool reverse = false);
+
         virtual void stroke();
         virtual void stroke_preserve();
         virtual void fill();
@@ -67,6 +68,6 @@ class CairoDrawingContext : public DrawingContext {
         Cairo::RefPtr<Cairo::Context> m_cr;
 };
 
-}
+}           //  namespace jcalc
 
 #endif          // PG_JCALC_CAIRO_DRAWING_CONTEXT_H
