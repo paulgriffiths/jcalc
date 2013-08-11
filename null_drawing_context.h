@@ -35,6 +35,11 @@ class NullDrawingContext : public DrawingContext {
 
         virtual void save() {};
         virtual void restore() {};
+
+        virtual void translate(const double tx, const double ty) {};
+        virtual void scale(const double sx, const double sy) {};
+        virtual void rotate(const double degrees) {};
+
         virtual void set_line_width(const double width) {};
         virtual void set_color(const RGB& rgb) {};
         virtual void set_color_alpha(const RGBA& rgba) {};
@@ -45,7 +50,14 @@ class NullDrawingContext : public DrawingContext {
         virtual void rectangle(const Point& topleft,
                                const double width,
                                const double height) {};
+        virtual void arc(const Point& center, const double radius,
+                         const double start_degrees,
+                         const double end_degrees,
+                         const bool reverse = false) {};
         virtual void stroke() {};
+        virtual void stroke_preserve() {};
+        virtual void fill() {};
+        virtual void fill_preserve() {};
 
         virtual void show_page() {};
 

@@ -29,9 +29,15 @@ class DrawingContext {
 
         virtual void save() = 0;
         virtual void restore() = 0;
+
         virtual void set_line_width(const double width) = 0;
         virtual void set_color(const RGB& rgb) = 0;
         virtual void set_color_alpha(const RGBA& rgba) = 0;
+
+        virtual void translate(const double tx, const double ty) = 0;
+        virtual void scale(const double sx, const double sy) = 0;
+        virtual void rotate(const double degrees) = 0;
+
         virtual void move_to(const Point& pt) = 0;
         virtual void line_to(const Point& pt) = 0;
         virtual void rectangle(const Point& topleft,
@@ -39,7 +45,14 @@ class DrawingContext {
         virtual void rectangle(const Point& topleft,
                                const double width,
                                const double height) = 0;
+        virtual void arc(const Point& center, const double radius,
+                         const double start_degrees,
+                         const double end_degrees,
+                         const bool reverse = false) = 0;
         virtual void stroke() = 0;
+        virtual void stroke_preserve() = 0;
+        virtual void fill() = 0;
+        virtual void fill_preserve() = 0;
 
         double width() const;
         double height() const;
