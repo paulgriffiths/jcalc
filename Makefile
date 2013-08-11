@@ -40,6 +40,7 @@ TESTMAINOBJ=tests/unittests.o
 OBJS=page.o drawing_context.o cairo_drawing_context.o colors.o
 OBJS+=cairo_pdf_drawing_context.o cairo_svg_drawing_context.o
 OBJS+=drawn_object.o drawn_circle_cross.o
+OBJS+=segmented_bend.o point.o
 
 TESTOBJS=
 
@@ -119,6 +120,9 @@ main.o: main.cpp jcalc.h page.h
 page.o: page.cpp page.h drawing_context.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+point.o: point.cpp point.h drawing_context.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
 colors.o: colors.cpp colors.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
@@ -129,6 +133,9 @@ drawn_object.o: drawn_object.cpp drawn_object.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 drawn_circle_cross.o: drawn_circle_cross.cpp drawn_circle_cross.h
+	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+
+segmented_bend.o: segmented_bend.cpp segmented_bend.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 cairo_drawing_context.o: cairo_drawing_context.cpp \

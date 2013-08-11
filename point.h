@@ -26,6 +26,9 @@ struct Point {
         x(x), y(y) {}
 };
 
+Point ptoc(const double theta, const double r,
+           const Point& cp = Point(0, 0));
+
 }
 
 #endif          // PG_JCALC_POINT_H

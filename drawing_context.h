@@ -54,6 +54,7 @@ class DrawingContext {
         virtual void stroke_preserve() = 0;
         virtual void fill() = 0;
         virtual void fill_preserve() = 0;
+        virtual void close_path() = 0;
         virtual void paint() = 0;
 
         double width() const;

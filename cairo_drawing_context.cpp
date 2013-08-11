@@ -119,6 +119,10 @@ void CairoDrawingContext::fill_preserve() {
     m_cr->fill_preserve();
 }
 
+void CairoDrawingContext::close_path() {
+    m_cr->close_path();
+}
+
 void CairoDrawingContext::paint() {
     m_cr->paint();
 }

@@ -13,6 +13,7 @@
 #include "page.h"
 #include "drawing_context.h"
 #include "drawn_circle_cross.h"
+#include "segmented_bend.h"
 
 using namespace jcalc;
 
@@ -26,6 +27,27 @@ void Page::show_page() {
 
     m_dc->set_color(RGB::stock_White);
     m_dc->paint();
+
+    m_dc->set_color(RGB::stock_Black);
+    m_dc->set_line_width(1);
+    m_dc->rectangle(Point(50, 50), Point(width - 50, height - 50));
+    m_dc->rectangle(Point(55, 550), Point(width - 55, height - 55));
+    m_dc->stroke();
+
+    SegBendInfo sbi(90, 15, 350, 50);
+    SegmentedBend sb1(m_dc, Point(100, 500), sbi,
+                     RGB::stock_Bisque);
+    sb1.draw();
+    SegmentedBend sb2(m_dc, Point(100, 500), sbi,
+                     RGB::stock_Bisque, false, false);
+    sb2.draw();
+
+    //CircleCross ccross1(m_dc, Point(55, 55), width - 110, 490);
+    //ccross1.draw();
+
+
+
+    /*
     m_dc->set_color(RGB::stock_SpringGreen);
     Point p1(50, 50);
     Point p2(width - 50, height - 50);
@@ -45,6 +67,7 @@ void Page::show_page() {
 
     CircleCross ccross4(m_dc, Point(400, 550), 100, 100);
     ccross4.draw();
+    */
 
     m_dc->show_page();
 }

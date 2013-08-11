@@ -36,7 +36,7 @@ const double PI = 3.14159265358979323846;
  *  Calculates the length of the hypotenuse using Pythagoras.
  */
 
-double hypot(const double opp, const double adj) {
+inline double hypot(const double opp, const double adj) {
     return std::sqrt(std::pow(opp, 2) + std::pow(adj, 2));
 }
 

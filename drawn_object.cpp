@@ -34,6 +34,13 @@ void DrawnObject::draw() {
     m_dc->restore();
 }
 
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
+void DrawnObject::scale(PDC dc, const double width, const double height) {
+}
+
+#pragma GCC diagnostic pop
+
 double DrawnObject::width() {
     return m_width;
 }

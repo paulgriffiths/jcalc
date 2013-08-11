@@ -31,7 +31,7 @@ class DrawnObject {
 
     private:
         virtual void draw_internal(PDC dc) = 0;
-        virtual void scale(PDC dc, const double width, const double height) = 0;
+        virtual void scale(PDC dc, const double width, const double height);
 
         PDC m_dc;
         const Point m_origin;
