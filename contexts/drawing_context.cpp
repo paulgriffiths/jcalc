@@ -11,6 +11,7 @@
  */
 
 #include <string>
+#include "contexts_common.h"
 #include "drawing_context.h"
 #include "contexts.h"
 

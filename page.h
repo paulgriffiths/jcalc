@@ -14,7 +14,7 @@
 #ifndef PG_JCALC_PAGE_H
 #define PG_JCALC_PAGE_H
 
-#include "drawing_context.h"
+#include "context.h"
 
 namespace jcalc {
 

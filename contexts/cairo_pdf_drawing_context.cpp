@@ -14,6 +14,7 @@
 #include <cairommconfig.h>
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
+#include "contexts_common.h"
 #include "cairo_pdf_drawing_context.h"
 
 using namespace jcalc;

@@ -1,32 +1,33 @@
 /*
- *  cairo_svg_drawing_context.h
+ *  cairo_pdf_drawing_context.h
  *  ===========================
  *  Copyright 2013 Paul Griffiths
  *  Email: mail@paulgriffiths.net
  *
- *  Interface to Cairo SVG drawing context.
+ *  Interface to Cairo PDF drawing context.
  *
  *  Distributed under the terms of the GNU General Public License.
  *  http://www.gnu.org/licenses/
  */
 
 
-#ifndef PG_JCALC_CAIRO_SVG_DRAWING_CONTEXT_H
-#define PG_JCALC_CAIRO_SVG_DRAWING_CONTEXT_H
+#ifndef PG_JCALC_CAIRO_PDF_DRAWING_CONTEXT_H
+#define PG_JCALC_CAIRO_PDF_DRAWING_CONTEXT_H
 
 #include <string>
+#include "contexts_common.h"
 #include "cairo_drawing_context.h"
 
 namespace jcalc {
 
-class CairoSVGDrawingContext : public CairoDrawingContext {
+class CairoPDFDrawingContext : public CairoDrawingContext {
     public:
-        explicit CairoSVGDrawingContext(const std::string& filename,
+        explicit CairoPDFDrawingContext(const std::string& filename,
                                         const int width,
                                         const int height);
-        virtual ~CairoSVGDrawingContext();
+        virtual ~CairoPDFDrawingContext();
 };
 
 }
 
-#endif          // PG_JCALC_CAIRO_SVG_DRAWING_CONTEXT_H
+#endif          // PG_JCALC_CAIRO_PDF_DRAWING_CONTEXT_H

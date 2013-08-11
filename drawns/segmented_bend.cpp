@@ -12,10 +12,8 @@
 
 #include <vector>
 #include <algorithm>
-#include "jcalc_common_types.h"
-#include "drawing_context.h"
+#include "drawn_common.h"
 #include "segmented_bend.h"
-#include "math_helper.h"
 
 using namespace jcalc;
 
@@ -63,7 +61,7 @@ void SegmentedBend::draw_internal(PDC dc) {
 
     for ( std::vector<Point>::reverse_iterator i = pts_in.rbegin();
           i != pts_in.rend(); ++i ) {
-        if ( i == pts_in.rbegin() && m_outline == false && m_fill == false) {
+        if ( i == pts_in.rbegin() && m_outline == false && m_fill == false ) {
             dc->move_to(*i);
         } else {
             dc->line_to(*i);
@@ -85,7 +83,7 @@ void SegmentedBend::draw_internal(PDC dc) {
         dc->restore();
     }
 
-    if ( m_outline || m_fill == false) {
+    if ( m_outline || m_fill == false ) {
         dc->stroke();
     }
 }

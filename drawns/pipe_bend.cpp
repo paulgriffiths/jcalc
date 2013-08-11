@@ -12,11 +12,9 @@
 
 #include <vector>
 #include <algorithm>
-#include "jcalc_common_types.h"
-#include "drawing_context.h"
+#include "drawn_common.h"
 #include "pipe_bend.h"
 #include "segmented_bend.h"
-#include "math_helper.h"
 
 using namespace jcalc;
 
@@ -64,6 +62,6 @@ void PipeBend::scale(PDC dc, const double width, const double height) {
                           m_pbi.casing_od / 2;
     const double s_extent = std::min(width, height);
     const double s_factor = s_extent / extent;
-    dc->scale(s_factor, s_factor);
+    set_scale(s_factor, s_factor);
 }
 

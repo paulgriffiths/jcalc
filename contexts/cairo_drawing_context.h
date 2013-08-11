@@ -18,6 +18,7 @@
 #include <cairommconfig.h>
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
+#include "contexts_common.h"
 #include "drawing_context.h"
 
 namespace jcalc {

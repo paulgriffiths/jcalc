@@ -11,8 +11,7 @@
  */
 
 #include <algorithm>
-#include "jcalc_common_types.h"
-#include "drawing_context.h"
+#include "drawn_common.h"
 #include "drawn_circle_cross.h"
 
 using namespace jcalc;

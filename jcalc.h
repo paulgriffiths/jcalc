@@ -14,8 +14,8 @@
 #ifndef PG_JCALC_H
 #define PG_JCALC_H
 
-#include "jcalc_exceptions.h"
-#include "drawing_context.h"
+#include "common/jcalc_exceptions.h"
+#include "context.h"
 #include "page.h"
 
 #endif          // PG_JCALC_H

@@ -15,8 +15,8 @@
 #define PG_JCALC_NULL_DRAWING_CONTEXT_H
 
 #include <string>
-#include <memory>
-#include "jcalc_common_types.h"
+#include "drawing_context.h"
+#include "contexts_common.h"
 
 namespace jcalc {
 

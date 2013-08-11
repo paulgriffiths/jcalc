@@ -14,8 +14,7 @@
 #ifndef PG_DRAWN_CIRCLE_CROSS_H
 #define PG_DRAWN_CIRCLE_CROSS_H
 
-#include "jcalc_common_types.h"
-#include "drawing_context.h"
+#include "drawn_common.h"
 #include "drawn_object.h"
 
 namespace jcalc {

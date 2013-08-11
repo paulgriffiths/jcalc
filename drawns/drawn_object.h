@@ -14,8 +14,7 @@
 #ifndef PG_DRAWN_OBJECT_H
 #define PG_DRAWN_OBJECT_H
 
-#include "jcalc_common_types.h"
-#include "drawing_context.h"
+#include "drawn_common.h"
 
 namespace jcalc {
 
@@ -26,8 +25,11 @@ class DrawnObject {
         virtual ~DrawnObject();
 
         void draw();
-        double width();
-        double height();
+
+    protected:
+        void set_scale(const double sx, const double sy);
+        double width() const;
+        double height() const;
 
     private:
         virtual void draw_internal(PDC dc) = 0;
@@ -37,6 +39,8 @@ class DrawnObject {
         const Point m_origin;
         const double m_width;
         const double m_height;
+        double m_scale_factor_x;
+        double m_scale_factor_y;
 };
 
 }           //  namespace jcalc

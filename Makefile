@@ -37,23 +37,43 @@ LD_TEST_FLAGS=-lCppUTest -lCppUTestExt
 MAINOBJ=main.o
 TESTMAINOBJ=tests/unittests.o
 
-OBJS=page.o drawing_context.o cairo_drawing_context.o colors.o
-OBJS+=cairo_pdf_drawing_context.o cairo_svg_drawing_context.o
-OBJS+=drawn_object.o drawn_circle_cross.o
-OBJS+=segmented_bend.o point.o pipe_bend.o
+OBJS=page.o
+
+OBJS+=common/colors.o common/point.o
+
+OBJS+=drawns/drawn_object.o
+OBJS+=drawns/segmented_bend.o
+OBJS+=drawns/pipe_bend.o
+
+OBJS+=contexts/drawing_context.o
+OBJS+=contexts/cairo_drawing_context.o
+OBJS+=contexts/cairo_pdf_drawing_context.o
+OBJS+=contexts/cairo_svg_drawing_context.o
 
 TESTOBJS=
 
 # Source and clean files and globs
 SRCS=$(wildcard *.cpp *.h)
-SRCS+=$(wildcard tests/*.cpp)
+SRCS+=$(wildcard common/*.cpp common/*.h)
+SRCS+=$(wildcard drawns/*.cpp drawns/*.h)
+SRCS+=$(wildcard drawns/*.cpp drawns/*.h)
+#SRCS+=$(wildcard tests/*.cpp)
 
 SRCGLOB=*.cpp *.h
-SRCGLOB+=tests/*.cpp
+SRCGLOB+=common/*.cpp common/*.h
+SRCGLOB+=drawns/*.cpp drawns/*.h
+SRCGLOB+=contexts/*.cpp contexts/*.h
+#SRCGLOB+=tests/*.cpp *.h
 
-CLNGLOB=jcalc unittests
+CLNGLOB=jcalc unittests outfile*
 CLNGLOB+=*~ *.o *.gcov *.out *.gcda *.gcno
-CLNGLOB+=tests/*~ tests/*.o tests/*.gcov tests/*.out tests/*.gcda tests/*.gcno
+CLNGLOB+=common/*~ common/*.o common/*.gcov common/*.out
+CLNGLOB+=common/*.gcda common/*.gcno
+CLNGLOB+=drawns/*~ drawns/*.o drawns/*.gcov drawns/*.out
+CLNGLOB+=drawns/*.gcda drawns/*.gcno
+CLNGLOB+=contexts/*~ contexts/*.o contexts/*.gcov contexts/*.out
+CLNGLOB+=contexts/*.gcda contexts/*.gcno
+#CLNGLOB+=tests/*~ tests/*.o tests/*.gcov tests/*.out tests/*.gcda tests/*.gcno
 
 
 # Build targets section
@@ -114,43 +134,69 @@ testmain: $(TESTMAINOBJ) $(TESTOBJS) $(OBJS)
 
 # Main program
 
-main.o: main.cpp jcalc.h page.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
-
-page.o: page.cpp page.h drawing_context.h
+main.o: main.cpp jcalc.h context.h page.h contexts/drawing_context.h \
+	common/jcalc_exceptions.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-point.o: point.cpp point.h drawing_context.h
+page.o: page.cpp page.h context.h contexts/drawing_context.h \
+	drawns/pipe_bend.h drawns/drawn_object.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-colors.o: colors.cpp colors.h
+common/point.o: common/point.cpp common/point.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-drawing_context.o: drawing_context.cpp drawing_context.h
+common/colors.o: common/colors.cpp common/colors.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+drawns/drawn_object.o: drawns/drawn_object.cpp drawns/drawn_object.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+drawns/segmented_bend.o: drawns/segmented_bend.cpp drawns/segmented_bend.h \
+	drawns/drawn_object.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+drawns/pipe_bend.o: drawns/pipe_bend.cpp drawns/pipe_bend.h \
+	drawns/segmented_bend.h drawns/drawn_object.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+contexts/drawing_context.o: contexts/drawing_context.cpp \
+	contexts/drawing_context.h contexts/null_drawing_context.h \
+	contexts/cairo_pdf_drawing_context.h \
+	contexts/cairo_svg_drawing_context.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
-drawn_object.o: drawn_object.cpp drawn_object.h
+contexts/null_drawing_context.o: contexts/null_drawing_context.cpp \
+	contexts/null_drawing_context.h contexts/drawing_context.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+contexts/cairo_drawing_context.o: contexts/cairo_drawing_context.cpp \
+	contexts/cairo_drawing_context.h contexts/drawing_context.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
-drawn_circle_cross.o: drawn_circle_cross.cpp drawn_circle_cross.h
+contexts/cairo_pdf_drawing_context.o: contexts/cairo_pdf_drawing_context.cpp \
+	contexts/cairo_pdf_drawing_context.h contexts/cairo_drawing_context.h \
+	contexts/drawing_context.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
-segmented_bend.o: segmented_bend.cpp segmented_bend.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
-
-pipe_bend.o: pipe_bend.cpp pipe_bend.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
-
-cairo_drawing_context.o: cairo_drawing_context.cpp \
-	cairo_drawing_context.h drawing_context.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
-
-cairo_pdf_drawing_context.o: cairo_pdf_drawing_context.cpp \
-	cairo_pdf_drawing_context.h drawing_context.h
-	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
-
-cairo_svg_drawing_context.o: cairo_svg_drawing_context.cpp \
-	cairo_svg_drawing_context.h drawing_context.h
+contexts/cairo_svg_drawing_context.o: contexts/cairo_svg_drawing_context.cpp \
+	contexts/cairo_svg_drawing_context.h contexts/cairo_drawing_context.h \
+	contexts/drawing_context.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 
@@ -158,4 +204,3 @@ cairo_svg_drawing_context.o: cairo_svg_drawing_context.cpp \
 
 tests/unittests.o: tests/testmain.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
-

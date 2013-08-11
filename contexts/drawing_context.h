@@ -16,7 +16,7 @@
 
 #include <string>
 #include <memory>
-#include "jcalc_common_types.h"
+#include "contexts_common.h"
 
 namespace jcalc {
 
