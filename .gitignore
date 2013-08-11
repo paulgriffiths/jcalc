@@ -16,6 +16,9 @@ unittests
 
 # Output files
 outfile
+*.pdf
+*.svg
+*.png
 
 # Temporary files
 *.swp

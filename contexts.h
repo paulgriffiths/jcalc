@@ -16,5 +16,6 @@
 
 #include "null_drawing_context.h"
 #include "cairo_pdf_drawing_context.h"
+#include "cairo_svg_drawing_context.h"
 
 #endif          // PG_JCALC_CONTEXTS_H

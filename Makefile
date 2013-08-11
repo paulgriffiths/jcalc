@@ -38,7 +38,7 @@ MAINOBJ=main.o
 TESTMAINOBJ=tests/unittests.o
 
 OBJS=page.o drawing_context.o cairo_drawing_context.o colors.o
-OBJS+=cairo_pdf_drawing_context.o
+OBJS+=cairo_pdf_drawing_context.o cairo_svg_drawing_context.o
 
 TESTOBJS=
 
@@ -130,6 +130,10 @@ cairo_drawing_context.o: cairo_drawing_context.cpp \
 
 cairo_pdf_drawing_context.o: cairo_pdf_drawing_context.cpp \
 	cairo_pdf_drawing_context.h drawing_context.h
+	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+
+cairo_svg_drawing_context.o: cairo_svg_drawing_context.cpp \
+	cairo_svg_drawing_context.h drawing_context.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 

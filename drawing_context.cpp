@@ -52,7 +52,9 @@ PDC jcalc::drawing_context_factory(const DrawingContext::Backend backend,
                                                           height));
 
                 case DrawingContext::Output::svg:
-                    throw unsupported_output("svg");
+                    return PDC(new CairoSVGDrawingContext(filename,
+                                                          width,
+                                                          height));
 
                 case DrawingContext::Output::png:
                     throw unsupported_output("png");
