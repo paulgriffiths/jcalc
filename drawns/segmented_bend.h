@@ -47,16 +47,16 @@ struct SegBendInfo {
 class SegmentedBend : public DrawnObject {
     public:
         explicit SegmentedBend(PDC dc, const Point& origin,
-                              const SegBendInfo& sbi, const RGB& rgb,
-                              const bool fill = true,
-                              const bool outline = false);
+                               const SegBendInfo& sbi, const RGB& rgb,
+                               const bool fill = true,
+                               const bool outline = false);
         virtual ~SegmentedBend();
 
     private:
         virtual void draw_internal(PDC dc);
 
         const SegBendInfo& m_sbi;
-        const RGB& m_rgb;
+        const RGB& m_fillcolor;
         const bool m_fill;
         const bool m_outline;
 };

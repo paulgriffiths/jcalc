@@ -62,12 +62,9 @@ void PipeBend::draw_internal(PDC dc) {
 
     for ( int i = 0; i < 4; ++i ) {
         sbi.pipe_radius = rads[i];
-        SegmentedBend section_fill(dc, Point(0, height()), sbi, colors[i]);
-        section_fill.draw();
-
-        SegmentedBend section_outline(dc, Point(0, height()), sbi,
-                                      RGB::stock_Black, false, false);
-        section_outline.draw();
+        SegmentedBend section(dc, Point(0, height()), sbi, colors[i],
+                              true, false);
+        section.draw();
     }
                 
     //  Draw the overall bend outline. Draw last to avoid the drawing

@@ -14,6 +14,8 @@
 #ifndef PG_JCALC_POINT_H
 #define PG_JCALC_POINT_H
 
+#include <vector>
+
 namespace jcalc {
 
 /*
@@ -30,6 +32,12 @@ struct Point {
         x(x), y(y) {}
 };
 
+
+/*
+ *  Typedefs
+ */
+
+typedef std::vector<Point> PointVector;
 
 /*
  *  Standalone function for converting polar coordinates to

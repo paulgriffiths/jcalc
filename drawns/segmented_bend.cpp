@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <cmath>
 #include "drawn_common.h"
 #include "segmented_bend.h"
 
@@ -20,13 +21,23 @@ using namespace jcalc;
 
 /*
  *  Constructor.
+ *
+ *  Arguments:
+ *    dc - PDC pointer to a drawing context.
+ *    origin - center of the bend arc
+ *    sbi - dimensions of the segmented bend
+ *    fillcolor - color with which to fill (outlines are always drawn
+ *                in black)
+ *    fill - fills the bend with 'fillcolor' if true
+ *    outline - draws a full outline if true. If false, draws an outline
+ *              only at the bend sides (i.e. not the bend end-faces) 
  */
 
 SegmentedBend::SegmentedBend(PDC dc, const Point& origin,
-                             const SegBendInfo& sbi, const RGB& rgb,
+                             const SegBendInfo& sbi, const RGB& fillcolor,
                              const bool fill, const bool outline) :
     DrawnObject(dc, origin, 0, 0),
-    m_sbi(sbi), m_rgb(rgb), m_fill(fill), m_outline(outline) {
+    m_sbi(sbi), m_fillcolor(fillcolor), m_fill(fill), m_outline(outline) {
 }
 
 
@@ -60,7 +71,7 @@ SegmentedBend::~SegmentedBend() {
 
 namespace {
 
-void calc_segment_points(std::vector<Point>& pts,
+void calc_segment_points(PointVector& pts,
                          const double cf_radius,
                          const double bend_angle,
                          const double segment_angle) {
@@ -83,8 +94,8 @@ void calc_segment_points(std::vector<Point>& pts,
  */
 
 void SegmentedBend::draw_internal(PDC dc) {
-    std::vector<Point> pts_out;             //  Extrados points
-    std::vector<Point> pts_in;              //  Intrados points
+    PointVector pts_out;             //  Extrados points
+    PointVector pts_in;              //  Intrados points
 
     //  Calculate the extrados and intrados points
 
@@ -93,82 +104,75 @@ void SegmentedBend::draw_internal(PDC dc) {
     calc_segment_points(pts_in, m_sbi.bend_radius - m_sbi.pipe_radius / 2,
                         m_sbi.bend_angle, m_sbi.segment_angle);
 
-    //  Draw the extrados points, from zero degrees proceeding in a
-    //  counterclockwise direction.
-
-    for ( std::vector<Point>::const_iterator i = pts_out.begin();
-          i != pts_out.end(); ++i ) {
-        if ( i == pts_out.begin() ) {
-            dc->move_to(*i);
-        } else {
-            dc->line_to(*i);
-        }
-    }
-
-    //  Draw the intrados points in the reverse direction, to form
-    //  an enclosed path suitable for filling.
-
-    for ( std::vector<Point>::reverse_iterator i = pts_in.rbegin();
-          i != pts_in.rend(); ++i ) {
-        if ( i == pts_in.rbegin() &&
-             m_outline == false &&
-             m_fill == false ) {
-
-            //  When m_outline is true, we're drawing the entire
-            //  outline (i.e. not omitting the faces), and when
-            //  m_fill is true, we're filling with a color. In
-            //  both of these cases we need an enclosing path,
-            //  so only use move_to() when we're not in either
-            //  situation and we're just drawing the sides, not
-            //  the faces.
-
-            dc->move_to(*i);
-        } else {
-            dc->line_to(*i);
-        }
-    }
-
-    //  Close the path if we're drawing a complete outline or
-    //  filling with color.
-
+    dc->set_color(RGB::stock_Black);
+    
     if ( m_outline || m_fill ) {
-        dc->close_path();
-    }
 
-    //  Fill with color, if applicable.
+        //  Draw the extrados points, from zero degrees proceeding in a
+        //  counterclockwise direction.
 
-    if ( m_fill ) {
-        dc->save();
-        dc->set_color(m_rgb);
-        if ( m_outline ) {
-
-            //  If we're drawing an outline in addition to filling,
-            //  we need to remember the path, so call fill_preserve()
-            //  rather than fill().
-
-            dc->fill_preserve();
-        } else {
-            dc->fill();
+        for ( PointVector::const_iterator i = pts_out.begin();
+              i != pts_out.end(); ++i ) {
+            if ( i == pts_out.begin() ) {
+                dc->move_to(*i);
+            } else {
+                dc->line_to(*i);
+            }
         }
-        dc->restore();
+
+        //  Draw the intrados points in the reverse direction, to form
+        //  an enclosed path suitable for filling.
+
+        for ( PointVector::const_reverse_iterator i = pts_in.rbegin();
+              i != pts_in.rend(); ++i ) {
+            dc->line_to(*i);
+        }
+
+        dc->close_path();
+
+        //  Fill with color, if applicable.
+
+        if ( m_fill ) {
+            dc->set_color(m_fillcolor);
+            if ( m_outline ) {
+
+                //  If we're drawing an outline in addition to filling,
+                //  we need to remember the path, so call fill_preserve()
+                //  rather than fill().
+
+                dc->fill_preserve();
+            } else {
+                dc->fill();
+            }
+            dc->set_color(RGB::stock_Black);
+        }
+
+        if ( m_outline ) {
+            dc->stroke();
+        }
     }
+    
+    //  Draw a partial outline of the sides only, if necessary.
 
-    //  Stroke the outline if necessary. If m_fill is false, we
-    //  assume we're drawing some kind of outline. If m_outline
-    //  is also false, then we assume we're just drawing a partial
-    //  outline (i.e. the sides, but not the faces.
-    //
-    //  Note that we cannot simultaneously fill and draw a partial
-    //  outline with the current logic, it has to be fill with a
-    //  full outline, or a partial outline with no fill.
-    //
-    //  TODO: remedy the above, we'll always need to at least draw
-    //  a partial outline, so by changing this behaviour we can
-    //  avoid calling the function twice. Some code duplication
-    //  will be necessary, as in one case we need a closed path,
-    //  and in the other case, we can't have one.
+    if ( m_outline == false ) {
+        for ( PointVector::const_iterator i = pts_out.begin();
+              i != pts_out.end(); ++i ) {
+            if ( i == pts_out.begin() ) {
+                dc->move_to(*i);
+            } else {
+                dc->line_to(*i);
+            }
+        }
+        dc->stroke();
 
-    if ( m_outline || m_fill == false ) {
+        for ( PointVector::const_iterator i = pts_in.begin();
+              i != pts_in.end(); ++i ) {
+            if ( i == pts_out.begin() ) {
+                dc->move_to(*i);
+            } else {
+                dc->line_to(*i);
+            }
+        }
         dc->stroke();
     }
 }
