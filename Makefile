@@ -40,7 +40,7 @@ TESTMAINOBJ=tests/unittests.o
 OBJS=page.o drawing_context.o cairo_drawing_context.o colors.o
 OBJS+=cairo_pdf_drawing_context.o cairo_svg_drawing_context.o
 OBJS+=drawn_object.o drawn_circle_cross.o
-OBJS+=segmented_bend.o point.o
+OBJS+=segmented_bend.o point.o pipe_bend.o
 
 TESTOBJS=
 
@@ -136,6 +136,9 @@ drawn_circle_cross.o: drawn_circle_cross.cpp drawn_circle_cross.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 segmented_bend.o: segmented_bend.cpp segmented_bend.h
+	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
+
+pipe_bend.o: pipe_bend.cpp pipe_bend.h
 	$(CXX) $(CXXFLAGS) $(ICAIRO) -c -o $@ $<
 
 cairo_drawing_context.o: cairo_drawing_context.cpp \

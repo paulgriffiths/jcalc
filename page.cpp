@@ -13,7 +13,7 @@
 #include "page.h"
 #include "drawing_context.h"
 #include "drawn_circle_cross.h"
-#include "segmented_bend.h"
+#include "pipe_bend.h"
 
 using namespace jcalc;
 
@@ -34,13 +34,9 @@ void Page::show_page() {
     m_dc->rectangle(Point(55, 550), Point(width - 55, height - 55));
     m_dc->stroke();
 
-    SegBendInfo sbi(90, 15, 350, 50);
-    SegmentedBend sb1(m_dc, Point(100, 500), sbi,
-                     RGB::stock_Bisque);
-    sb1.draw();
-    SegmentedBend sb2(m_dc, Point(100, 500), sbi,
-                     RGB::stock_Bisque, false, false);
-    sb2.draw();
+    PipeBendInfo pbi(90, 15, 500, 200, 170, 140, 100);
+    PipeBend pb(m_dc, Point(60, 60), width - 120, 480, pbi);
+    pb.draw();
 
     //CircleCross ccross1(m_dc, Point(55, 55), width - 110, 490);
     //ccross1.draw();

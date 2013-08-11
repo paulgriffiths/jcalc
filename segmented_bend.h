@@ -21,10 +21,10 @@
 namespace jcalc {
 
 struct SegBendInfo {
-    const double bend_angle;
-    const double segment_angle;
-    const double bend_radius;
-    const double pipe_radius;
+    double bend_angle;
+    double segment_angle;
+    double bend_radius;
+    double pipe_radius;
 
     SegBendInfo() :
         bend_angle(0), segment_angle(0),
