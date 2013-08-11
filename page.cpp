@@ -34,8 +34,8 @@ void Page::show_page() {
     m_dc->rectangle(Point(55, 550), Point(width - 55, height - 55));
     m_dc->stroke();
 
-    PipeBendInfo pbi(90, 15, 500, 200, 170, 140, 100);
-    PipeBend pb(m_dc, Point(60, 60), width - 120, 480, pbi);
+    PipeBendInfo pbi(60, 15, 500, 200, 170, 140, 100);
+    PipeBend pb(m_dc, Point(60, 60), width - 120, 580, pbi);
     pb.draw();
 
     //CircleCross ccross1(m_dc, Point(55, 55), width - 110, 490);
