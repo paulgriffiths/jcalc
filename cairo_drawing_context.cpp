@@ -119,3 +119,6 @@ void CairoDrawingContext::fill_preserve() {
     m_cr->fill_preserve();
 }
 
+void CairoDrawingContext::paint() {
+    m_cr->paint();
+}

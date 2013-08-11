@@ -58,6 +58,7 @@ class NullDrawingContext : public DrawingContext {
         virtual void stroke_preserve() {};
         virtual void fill() {};
         virtual void fill_preserve() {};
+        virtual void paint() {};
 
         virtual void show_page() {};
 

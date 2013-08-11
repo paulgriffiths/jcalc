@@ -34,9 +34,9 @@ void do_drawing() {
     //        "outfile", 400, 600));
 
     jcalc::PDC pdc(jcalc::drawing_context_factory(
-           jcalc::DrawingContext::Backend::cairo,
-            jcalc::DrawingContext::Output::pdf,
-            "outfile", 612, 792));
+            jcalc::DrawingContext::Backend::cairo,
+            jcalc::DrawingContext::Output::svg,
+            "outfile.svg", 612, 792));
 
     jcalc::Page page(pdc);
     page.show_page();

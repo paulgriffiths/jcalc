@@ -58,6 +58,7 @@ class CairoDrawingContext : public DrawingContext {
         virtual void stroke_preserve();
         virtual void fill();
         virtual void fill_preserve();
+        virtual void paint();
 
     private:
         Cairo::RefPtr<Cairo::Surface> m_surface;

@@ -49,10 +49,12 @@ class DrawingContext {
                          const double start_degrees,
                          const double end_degrees,
                          const bool reverse = false) = 0;
+
         virtual void stroke() = 0;
         virtual void stroke_preserve() = 0;
         virtual void fill() = 0;
         virtual void fill_preserve() = 0;
+        virtual void paint() = 0;
 
         double width() const;
         double height() const;
