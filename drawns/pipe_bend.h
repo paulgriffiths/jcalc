@@ -14,6 +14,7 @@
 #ifndef PG_DRAWN_PIPE_BEND_H
 #define PG_DRAWN_PIPE_BEND_H
 
+#include <utility>
 #include "drawn_common.h"
 #include "drawn_object.h"
 #include "flange.h"
@@ -64,7 +65,8 @@ class PipeBend : public DrawnObject {
 
     private:
         virtual void draw_internal(PDC dc);
-        virtual void scale(PDC dc, const double width, const double height);
+        virtual std::pair<double, double>
+            scale(PDC dc, const double width, const double height);
 
         const PipeBendInfo& m_pbi;
         const FlangeInfo& m_fi;

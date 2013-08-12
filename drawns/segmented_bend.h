@@ -46,19 +46,28 @@ struct SegBendInfo {
 
 class SegmentedBend : public DrawnObject {
     public:
+        enum class outline {none, partial, full};
+
         explicit SegmentedBend(PDC dc, const Point& origin,
                                const SegBendInfo& sbi, const RGB& rgb,
                                const bool fill = true,
-                               const bool outline = false);
+                               const outline outline_type = outline::partial,
+                               const bool ribs = false);
         virtual ~SegmentedBend();
+
 
     private:
         virtual void draw_internal(PDC dc);
+        void draw_section(PDC dc, const PointVector& pts_out,
+                          const PointVector& pts_in);
+        void draw_ribs(PDC dc, const PointVector& pts_out,
+                       const PointVector& pts_in);
 
         const SegBendInfo& m_sbi;
         const RGB& m_fillcolor;
         const bool m_fill;
-        const bool m_outline;
+        const outline m_outline;
+        const bool m_ribs;
 };
 
 }           //  namespace jcalc

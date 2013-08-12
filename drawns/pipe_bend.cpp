@@ -11,6 +11,7 @@
  */
 
 #include <vector>
+#include <utility>
 #include <algorithm>
 #include "drawn_common.h"
 #include "pipe_bend.h"
@@ -46,46 +47,58 @@ PipeBend::~PipeBend() {
  */
 
 void PipeBend::draw_internal(PDC dc) {
+    const int num_components = 5;
+    const Point origin(0, height());
     SegBendInfo sbi(m_pbi.bend_angle, m_pbi.segment_angle,
                     m_pbi.nominal_radius, m_pbi.casing_od / 2);
 
-    //  Set up colors and radii for the four "components"
+    //  Set up colors and radii for the four "components", and
+    //  for the full outline at the end (drawn separately to
+    //  avoid the other drawn components interfering with it).
 
-    const double rads[] = {m_pbi.casing_od / 2,
-                           m_pbi.casing_id / 2,
-                           m_pbi.lining_od / 2,
-                           m_pbi.lining_id / 2};
-    const RGB colors[] = {RGB::stock_SeaGreen,
-                          RGB::stock_LightGray,
-                          RGB::stock_Bisque,
-                          RGB::stock_White};
+    const double rads[num_components] = {m_pbi.casing_od / 2,
+                                         m_pbi.casing_id / 2,
+                                         m_pbi.lining_od / 2,
+                                         m_pbi.lining_id / 2,
+                                         m_pbi.casing_od / 2};
+    const RGB colors[num_components] = {RGB::stock_SeaGreen,
+                                        RGB::stock_LightGray,
+                                        RGB::stock_Bisque,
+                                        RGB::stock_White,
+                                        RGB::stock_SeaGreen};
 
-    //  Draw them
+    //  Draw them. When i ==:
+    //    0 - the outer component is drawn filled, but with no outline
+    //    1, 2, 3 - the inner components are drawn filled with partial
+    //              outlines
+    //    4 - the full outline and ribs are drawn for the outer component,
+    //        with no fill.
 
-    for ( int i = 0; i < 4; ++i ) {
+    for ( int i = 0; i < num_components; ++i ) {
         sbi.pipe_radius = rads[i];
-        SegmentedBend section(dc, Point(0, height()), sbi, colors[i],
-                              true, false);
+        const bool fill = (i == num_components - 1 ? false : true);
+        const bool ribs = (i == num_components - 1 ? true : false);
+        SegmentedBend::outline outline;
+        if ( i == 0 ) {
+            outline = SegmentedBend::outline::none;
+        } else if ( i == num_components - 1 ) {
+            outline = SegmentedBend::outline::full;
+        } else {
+            outline = SegmentedBend::outline::partial;
+        }
+
+        SegmentedBend section(dc, origin, sbi, colors[i], fill, outline, ribs);
         section.draw();
     }
                 
-    //  Draw the overall bend outline. Draw last to avoid the drawing
-    //  of the other components interfering with it.
+    //  Draw flanges. Note the second flange has to be drawn with a
+    //  center point at 360 - bend_angle, but faces the other way so
+    //  has to be flipped back 180 degrees.
 
-    sbi.pipe_radius = m_pbi.casing_od / 2;
-    SegmentedBend bend_outline(dc, Point(0, height()), sbi,
-                               RGB::stock_Black, false, true);
-    bend_outline.draw();
-
-    //  Draw flanges
-
-    Flange fl1(dc, ptoc(0, m_pbi.nominal_radius, Point(0, height())), 0,
-               m_fi);
+    Flange fl1(dc, ptoc(0, m_pbi.nominal_radius, origin), 0, m_fi);
     fl1.draw();
-    Flange fl2(dc, ptoc(360 - m_pbi.bend_angle, m_pbi.nominal_radius,
-               Point(0, height())),
-               180 - m_pbi.bend_angle,
-               m_fi);
+    Flange fl2(dc, ptoc(360 - m_pbi.bend_angle, m_pbi.nominal_radius, origin),
+               180 - m_pbi.bend_angle, m_fi);
     fl2.draw();
 }
 
@@ -97,10 +110,11 @@ void PipeBend::draw_internal(PDC dc) {
  *  is being developed.
  */
 
-void PipeBend::scale(PDC dc, const double width, const double height) {
+std::pair<double, double>
+PipeBend::scale(PDC dc, const double width, const double height) {
     const double extent = m_pbi.nominal_radius +
                           m_fi.fd / 2;
     const double s_extent = std::min(width, height);
     const double s_factor = s_extent / extent;
-    set_scale(s_factor, s_factor);
+    return std::pair<double, double>(s_factor, s_factor);
 }

@@ -35,9 +35,13 @@ using namespace jcalc;
 
 SegmentedBend::SegmentedBend(PDC dc, const Point& origin,
                              const SegBendInfo& sbi, const RGB& fillcolor,
-                             const bool fill, const bool outline) :
+                             const bool fill,
+                             const SegmentedBend::outline outline_type,
+                             const bool ribs) :
     DrawnObject(dc, origin, 0, 0),
-    m_sbi(sbi), m_fillcolor(fillcolor), m_fill(fill), m_outline(outline) {
+    m_sbi(sbi), m_fillcolor(fillcolor),
+    m_fill(fill), m_outline(outline_type),
+    m_ribs(ribs) {
 }
 
 
@@ -105,8 +109,23 @@ void SegmentedBend::draw_internal(PDC dc) {
                         m_sbi.bend_angle, m_sbi.segment_angle);
 
     dc->set_color(RGB::stock_Black);
-    
-    if ( m_outline || m_fill ) {
+
+    if ( m_fill || m_outline != outline::none ) {
+        draw_section(dc, pts_out, pts_in);
+    }
+    if ( m_ribs ) {
+        draw_ribs(dc, pts_out, pts_in);
+    }
+}
+
+
+/*
+ *  Draws the section profiles.
+ */
+
+void SegmentedBend::draw_section(PDC dc, const PointVector& pts_out,
+                                 const PointVector& pts_in) {
+    if ( m_outline == outline::full || m_fill ) {
 
         //  Draw the extrados points, from zero degrees proceeding in a
         //  counterclockwise direction.
@@ -134,7 +153,7 @@ void SegmentedBend::draw_internal(PDC dc) {
 
         if ( m_fill ) {
             dc->set_color(m_fillcolor);
-            if ( m_outline ) {
+            if ( m_outline == outline::full ) {
 
                 //  If we're drawing an outline in addition to filling,
                 //  we need to remember the path, so call fill_preserve()
@@ -147,14 +166,14 @@ void SegmentedBend::draw_internal(PDC dc) {
             dc->set_color(RGB::stock_Black);
         }
 
-        if ( m_outline ) {
+        if ( m_outline == outline::full ) {
             dc->stroke();
         }
     }
     
     //  Draw a partial outline of the sides only, if necessary.
 
-    if ( m_outline == false ) {
+    if ( m_outline == outline::partial ) {
         for ( PointVector::const_iterator i = pts_out.begin();
               i != pts_out.end(); ++i ) {
             if ( i == pts_out.begin() ) {
@@ -177,3 +196,23 @@ void SegmentedBend::draw_internal(PDC dc) {
     }
 }
 
+
+/*
+ *  Draws the section profiles.
+ */
+
+void SegmentedBend::draw_ribs(PDC dc, const PointVector& pts_out,
+                              const PointVector& pts_in) {
+    if ( pts_out.size() > 2 && pts_in.size() > 2 ) {
+        PointVector::const_iterator itr_pt_out = pts_out.begin() + 1;
+        PointVector::const_iterator itr_pt_in = pts_in.begin() + 1;
+
+        while ( itr_pt_out != pts_out.end() - 1 &&
+                itr_pt_in != pts_in.end() - 1) {
+            dc->move_to(*itr_pt_out++);
+            dc->line_to(*itr_pt_in++);
+        }
+
+        dc->stroke();
+    }
+}
