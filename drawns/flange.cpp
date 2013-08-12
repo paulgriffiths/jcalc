@@ -64,21 +64,19 @@ void Flange::draw_profile(PDC dc, const double angle) {
     dc->save();
     dc->rotate(angle);
 
-    for ( int r = 1; r >= -1; r -= 2 ) {
-        Point pts[] = {Point(m_fi.hd / 2 * r, 0),
-                       Point(m_fi.rfd / 2 * r, 0),
-                       Point(m_fi.rfd / 2 * r, -m_fi.rfh),
-                       Point(m_fi.fd / 2 * r, -m_fi.rfh),
-                       Point(m_fi.fd / 2 * r, -m_fi.ft),
-                       Point(m_fi.hd / 2 * r, -m_fi.ft)};
+    for ( int reverse = 1; reverse >= -1; reverse -= 2 ) {
+        Point pts[] = {Point(m_fi.hd / 2 * reverse, 0),
+                       Point(m_fi.rfd / 2 * reverse, 0),
+                       Point(m_fi.rfd / 2 * reverse, -m_fi.rfh),
+                       Point(m_fi.fd / 2 * reverse, -m_fi.rfh),
+                       Point(m_fi.fd / 2 * reverse, -m_fi.ft),
+                       Point(m_fi.hd / 2 * reverse, -m_fi.ft)};
 
-        for ( int i = 0; i < 6; ++i ) {
-            if ( i == 0 ) {
-                dc->move_to(pts[i]);
-            } else {
-                dc->line_to(pts[i]);
-            }
+        dc->move_to(pts[0]);
+        for ( int i = 1; i < 6; ++i ) {
+            dc->line_to(pts[i]);
         }
+
         dc->close_path();
         dc->set_color(RGB::stock_LightGray);
         dc->fill_preserve();
