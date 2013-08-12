@@ -10,6 +10,7 @@
  *  http://www.gnu.org/licenses/
  */
 
+#include <utility>
 #include "drawn_common.h"
 #include "drawn_object.h"
 
@@ -50,7 +51,9 @@ void DrawnObject::draw() {
     m_dc->save();
     m_dc->translate(m_origin.x, m_origin.y);
 
-    scale(m_dc, m_width, m_height);
+    std::pair<double, double> scale_factors = scale(m_dc, m_width, m_height);
+    set_scale(scale_factors.first, scale_factors.second);
+
     draw_internal(m_dc);
 
     m_dc->restore();
@@ -58,9 +61,7 @@ void DrawnObject::draw() {
 
 
 /*
- *  Sets the drawing scale factors, this should be called from the
- *  virtual scale() member function if the derived class needs to
- *  scale.
+ *  Sets the drawing scale factors.
  */
 
 void DrawnObject::set_scale(const double sx, const double sy) {
@@ -82,7 +83,9 @@ void DrawnObject::set_scale(const double sx, const double sy) {
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
-void DrawnObject::scale(PDC dc, const double width, const double height) {
+std::pair<double, double>
+DrawnObject::scale(PDC dc, const double width, const double height) {
+    return std::pair<double, double>(1, 1);
 }
 
 #pragma GCC diagnostic pop

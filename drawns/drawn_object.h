@@ -14,6 +14,7 @@
 #ifndef PG_DRAWN_OBJECT_H
 #define PG_DRAWN_OBJECT_H
 
+#include <utility>
 #include "drawn_common.h"
 
 namespace jcalc {
@@ -27,13 +28,15 @@ class DrawnObject {
         void draw();
 
     protected:
-        void set_scale(const double sx, const double sy);
         double width() const;
         double height() const;
 
     private:
         virtual void draw_internal(PDC dc) = 0;
-        virtual void scale(PDC dc, const double width, const double height);
+        virtual std::pair<double, double>
+            scale(PDC dc, const double width, const double height);
+
+        void set_scale(const double sx, const double sy);
 
         PDC m_dc;
         const Point m_origin;
