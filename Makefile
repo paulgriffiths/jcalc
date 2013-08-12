@@ -44,6 +44,7 @@ OBJS+=common/colors.o common/point.o
 OBJS+=drawns/drawn_object.o
 OBJS+=drawns/segmented_bend.o
 OBJS+=drawns/pipe_bend.o
+OBJS+=drawns/flange.o
 
 OBJS+=contexts/drawing_context.o
 OBJS+=contexts/cairo_drawing_context.o
@@ -169,6 +170,13 @@ drawns/segmented_bend.o: drawns/segmented_bend.cpp drawns/segmented_bend.h \
 
 drawns/pipe_bend.o: drawns/pipe_bend.cpp drawns/pipe_bend.h \
 	drawns/segmented_bend.h drawns/drawn_object.h \
+	common/colors.h common/point.h common/jcalc_exceptions.h \
+	common/math_helper.h
+	@echo "Compiling $<..."
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+drawns/flange.o: drawns/flange.cpp drawns/flange.h \
+	drawns/drawn_object.h \
 	common/colors.h common/point.h common/jcalc_exceptions.h \
 	common/math_helper.h
 	@echo "Compiling $<..."

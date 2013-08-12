@@ -60,9 +60,10 @@ void Page::show_page() {
     //  the type of object and parameters thereto will be specified on
     //  the command line and/or in a configuration file.
 
-    PipeBendInfo pbi(60, 15, 300, 200, 170, 140, 100);
+    PipeBendInfo pbi(60, 15, 600, 250, 230, 200, 150);
     PipeBend pb(m_dc, Point(int_margin, int_margin), width - int_margin * 2,
-                height - int_margin * 2 - padding - info_box_height, pbi);
+                height - int_margin * 2 - padding - info_box_height, pbi,
+                FlangeInfo::F150PN16);
     pb.draw();
 
     //  Create the page.

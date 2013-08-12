@@ -16,6 +16,7 @@
 
 #include "drawn_common.h"
 #include "drawn_object.h"
+#include "flange.h"
 
 namespace jcalc {
 
@@ -57,7 +58,8 @@ class PipeBend : public DrawnObject {
     public:
         explicit PipeBend(PDC dc, const Point& origin,
                           const double width, const double height,
-                          const PipeBendInfo& pbi);
+                          const PipeBendInfo& pbi,
+                          const FlangeInfo& fi);
         virtual ~PipeBend();
 
     private:
@@ -65,6 +67,7 @@ class PipeBend : public DrawnObject {
         virtual void scale(PDC dc, const double width, const double height);
 
         const PipeBendInfo& m_pbi;
+        const FlangeInfo& m_fi;
 };
 
 }           //  namespace jcalc
