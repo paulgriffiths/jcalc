@@ -38,9 +38,9 @@ const FlangeInfo FlangeInfo::F400PN16("400PN16", 400, 580, 32,
  */
 
 Flange::Flange(PDC dc, const Point& origin, const double angle,
-               const FlangeInfo& fi) :
+               const FlangeInfo& fi, const bool profile) :
     DrawnObject(dc, origin, 0, 0),
-    m_fi(fi), m_angle(angle) {
+    m_fi(fi), m_angle(angle), m_profile(profile) {
 }
 
 
@@ -57,10 +57,18 @@ Flange::~Flange() {
  */
 
 void Flange::draw_internal(PDC dc) {
-    draw_profile(dc, m_angle);
+    draw_cross_section(dc, m_angle);
+    if ( m_profile) {
+        draw_profile(dc, m_angle);
+    }
 }
 
-void Flange::draw_profile(PDC dc, const double angle) {
+
+/*
+ *  Draws the flange cross section.
+ */
+
+void Flange::draw_cross_section(PDC dc, const double angle) {
     dc->save();
     dc->rotate(angle);
 
@@ -81,6 +89,59 @@ void Flange::draw_profile(PDC dc, const double angle) {
         dc->set_color(RGB::stock_LightGray);
         dc->fill_preserve();
         dc->set_color(RGB::stock_Black);
+        dc->stroke();
+    }
+
+    dc->restore();
+}
+
+
+/*
+ *  Draws an end profile of the flange.
+ */
+
+void Flange::draw_profile(PDC dc, const double angle) {
+    const Point origin(0, 0);
+
+    dc->save();
+    dc->rotate(angle);
+
+    //  Draw profile arcs
+
+    dc->move_to(origin);
+    dc->arc(origin, m_fi.fd / 2, 0, 180);
+    dc->close_path();
+    dc->stroke();
+
+    const double rads[] = {m_fi.bcd / 2, m_fi.rfd / 2, m_fi.hd / 2};
+
+    dc->scaled_dashed_line();
+    for ( int i = 0; i < 3; ++i ) {
+        dc->arc(origin, rads[i], 0, 180);
+        dc->stroke();
+        if ( i == 0 ) {
+            dc->solid_line();
+        }
+    }
+
+    //  Draw bolt holes
+
+    const double bhll = (m_fi.bhd / 2) * 1.5;
+    for ( int i = 0; i < (m_fi.nb / 2); ++i ) {
+        const double angle = (360 / m_fi.nb) * (i + 0.5);
+
+        //  Draw hole
+
+        const Point hole_center = ptoc(angle, m_fi.bcd / 2);
+        dc->arc(hole_center, m_fi.bhd / 2, 0, 360);
+
+        //  Draw hole diameter line
+
+        const Point line_start = ptoc(angle, m_fi.bcd / 2 - bhll);
+        const Point line_end = ptoc(angle, m_fi.bcd / 2 + bhll);
+        dc->move_to(line_start);
+        dc->line_to(line_end);
+
         dc->stroke();
     }
 

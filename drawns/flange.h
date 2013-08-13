@@ -67,15 +67,18 @@ class Flange : public DrawnObject {
     public:
         explicit Flange(PDC dc, const Point& origin,
                         const double angle,
-                        const FlangeInfo& fi);
+                        const FlangeInfo& fi,
+                        const bool profile = false);
         virtual ~Flange();
 
     private:
         virtual void draw_internal(PDC dc);
+        void draw_cross_section(PDC dc, const double angle);
         void draw_profile(PDC dc, const double angle);
 
         const FlangeInfo& m_fi;
         const double m_angle;
+        const bool m_profile;
 };
 
 }           //  namespace jcalc
