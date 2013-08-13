@@ -103,9 +103,9 @@ void SegmentedBend::draw_internal(PDC dc) {
 
     //  Calculate the extrados and intrados points
 
-    calc_segment_points(pts_out, m_sbi.bend_radius + m_sbi.pipe_radius / 2,
+    calc_segment_points(pts_out, m_sbi.bend_radius + m_sbi.pipe_radius,
                         m_sbi.bend_angle, m_sbi.segment_angle);
-    calc_segment_points(pts_in, m_sbi.bend_radius - m_sbi.pipe_radius / 2,
+    calc_segment_points(pts_in, m_sbi.bend_radius - m_sbi.pipe_radius,
                         m_sbi.bend_angle, m_sbi.segment_angle);
 
     dc->set_color(RGB::stock_Black);
