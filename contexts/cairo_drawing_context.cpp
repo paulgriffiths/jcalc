@@ -62,6 +62,15 @@ void CairoDrawingContext::set_line_width(const double width) {
     m_cr->set_line_width(width);
 }
 
+void CairoDrawingContext::set_scaled_line_width(const double width) {
+    double x = 1;
+    double y = 1;
+
+    m_cr->device_to_user_distance(x, y);
+
+    m_cr->set_line_width(width * x);
+}
+
 void CairoDrawingContext::set_color(const RGB& rgb) {
     m_cr->set_source_rgb(rgb.red, rgb.green, rgb.blue);
 }

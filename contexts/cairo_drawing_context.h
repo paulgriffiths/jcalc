@@ -37,6 +37,7 @@ class CairoDrawingContext : public DrawingContext {
         virtual void restore();
 
         virtual void set_line_width(const double width);
+        virtual void set_scaled_line_width(const double width);
         virtual void set_color(const RGB& rgb);
         virtual void set_color_alpha(const RGBA& rgba);
 

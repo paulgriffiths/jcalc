@@ -47,6 +47,7 @@ PipeBend::~PipeBend() {
  */
 
 void PipeBend::draw_internal(PDC dc) {
+    dc->set_scaled_line_width(0.5);
     draw_pipe(dc);
     draw_pipe_cross_section(dc);
     draw_flanges(dc);

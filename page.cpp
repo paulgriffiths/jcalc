@@ -47,7 +47,7 @@ void Page::show_page() {
     //  Draw main margin and info box
 
     m_dc->set_color(RGB::stock_Black);
-    m_dc->set_line_width(1);
+    m_dc->set_line_width(0.5);
     m_dc->rectangle(Point(margin, margin),
                     Point(width - margin, height - margin));
     m_dc->rectangle(Point(int_margin, height - int_margin - info_box_height),

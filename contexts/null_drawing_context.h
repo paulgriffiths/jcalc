@@ -44,6 +44,7 @@ class NullDrawingContext : public DrawingContext {
         virtual void rotate(const double degrees) {};
 
         virtual void set_line_width(const double width) {};
+        virtual void set_scaled_line_width(const double width) {};
         virtual void set_color(const RGB& rgb) {};
         virtual void set_color_alpha(const RGBA& rgba) {};
         virtual void move_to(const Point& pt) {};

@@ -31,6 +31,7 @@ class DrawingContext {
         virtual void restore() = 0;
 
         virtual void set_line_width(const double width) = 0;
+        virtual void set_scaled_line_width(const double width) = 0;
         virtual void set_color(const RGB& rgb) = 0;
         virtual void set_color_alpha(const RGBA& rgba) = 0;
 
