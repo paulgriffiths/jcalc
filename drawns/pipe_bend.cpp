@@ -123,8 +123,8 @@ void PipeBend::draw_pipe_cross_section(PDC dc) {
 
     for ( int i = 0; i < num_components; ++i ) {
         dc->arc(origin, rads[i], 0, 180);
+        dc->stroke();
     }
-    dc->stroke();
 }
 
 
