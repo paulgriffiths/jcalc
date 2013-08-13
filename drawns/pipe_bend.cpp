@@ -101,6 +101,9 @@ void PipeBend::draw_pipe(PDC dc) {
         SegmentedBend section(dc, origin, sbi, colors[i], fill, outline, ribs);
         section.draw();
     }
+
+    BendArc bend_arc(dc, origin, sbi);
+    bend_arc.draw();
 }
 
 

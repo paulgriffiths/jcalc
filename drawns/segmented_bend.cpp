@@ -216,3 +216,62 @@ void SegmentedBend::draw_ribs(PDC dc, const PointVector& pts_out,
         dc->stroke();
     }
 }
+
+
+/*
+ *  Constructor.
+ *
+ *  Arguments:
+ *    dc - PDC pointer to a drawing context.
+ *    origin - center of the bend arc
+ *    sbi - dimensions of the segmented bend
+ *    fillcolor - color with which to fill (outlines are always drawn
+ *                in black)
+ *    fill - fills the bend with 'fillcolor' if true
+ *    outline - draws a full outline if true. If false, draws an outline
+ *              only at the bend sides (i.e. not the bend end-faces) 
+ */
+
+BendArc::BendArc(PDC dc, const Point& origin,
+                 const SegBendInfo& sbi, const bool smooth) :
+    DrawnObject(dc, origin, 0, 0),
+    m_sbi(sbi), m_smooth(smooth) {
+}
+
+
+/*
+ *  Destructor.
+ */
+
+BendArc::~BendArc() {
+}
+
+
+/*
+ *  Draws a bend arc.
+ */
+
+void BendArc::draw_internal(PDC dc) {
+
+    dc->set_color(RGB::stock_Black);
+    dc->scaled_dashed_line();
+
+    if ( m_smooth ) {
+        dc->arc(Point(0, 0), m_sbi.bend_radius, 0,
+                360 - m_sbi.bend_angle, true);
+    } else {
+        PointVector pts;
+        calc_segment_points(pts, m_sbi.bend_radius,
+                            m_sbi.bend_angle, m_sbi.segment_angle);
+
+        dc->move_to(pts[0]);
+        for ( PointVector::const_iterator i = pts.begin() + 1;
+              i != pts.end(); ++i ) {
+            dc->line_to(*i);
+        }
+    }
+
+    dc->stroke();
+}
+
+

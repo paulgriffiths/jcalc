@@ -55,7 +55,6 @@ class SegmentedBend : public DrawnObject {
                                const bool ribs = false);
         virtual ~SegmentedBend();
 
-
     private:
         virtual void draw_internal(PDC dc);
         void draw_section(PDC dc, const PointVector& pts_out,
@@ -68,6 +67,24 @@ class SegmentedBend : public DrawnObject {
         const bool m_fill;
         const outline m_outline;
         const bool m_ribs;
+};
+
+
+/*
+ *  Bend arc class.
+ */
+
+class BendArc : public DrawnObject {
+    public:
+        explicit BendArc(PDC dc, const Point& origin,
+                         const SegBendInfo& sbi, const bool smooth = false);
+        virtual ~BendArc();
+
+    private:
+        virtual void draw_internal(PDC dc);
+
+        const SegBendInfo& m_sbi;
+        const bool m_smooth;
 };
 
 }           //  namespace jcalc
