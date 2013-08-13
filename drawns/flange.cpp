@@ -58,7 +58,7 @@ Flange::~Flange() {
 
 void Flange::draw_internal(PDC dc) {
     draw_cross_section(dc, m_angle);
-    if ( m_profile) {
+    if ( m_profile ) {
         draw_profile(dc, m_angle);
     }
 }

@@ -143,7 +143,7 @@ void CairoDrawingContext::paint() {
 }
 
 void CairoDrawingContext::solid_line() {
-    const static std::vector<double> solid_dash;
+    static const std::vector<double> solid_dash;
     m_cr->set_dash(solid_dash, 0);
 }
 

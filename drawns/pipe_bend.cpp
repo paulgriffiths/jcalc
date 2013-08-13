@@ -58,7 +58,7 @@ void PipeBend::draw_internal(PDC dc) {
  */
 
 void PipeBend::draw_pipe(PDC dc) {
-    const static int num_components = 5;
+    static const int num_components = 5;
     const Point origin(0, height() - (m_fi.fd / 2));
     SegBendInfo sbi(m_pbi.bend_angle, m_pbi.segment_angle,
                     m_pbi.nominal_radius, m_pbi.casing_od / 2);
@@ -109,7 +109,7 @@ void PipeBend::draw_pipe(PDC dc) {
  */
 
 void PipeBend::draw_pipe_cross_section(PDC dc) {
-    const static int num_components = 4;
+    static const int num_components = 4;
     const Point origin(m_pbi.nominal_radius, height() - (m_fi.fd / 2));
 
     const double rads[num_components] = {m_pbi.casing_od / 2,
