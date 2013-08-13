@@ -65,6 +65,9 @@ class PipeBend : public DrawnObject {
 
     private:
         virtual void draw_internal(PDC dc);
+        void draw_pipe(PDC dc);
+        void draw_pipe_cross_section(PDC dc);
+        void draw_flanges(PDC dc);
         virtual std::pair<double, double>
             scale(PDC dc, const double width, const double height);
 
