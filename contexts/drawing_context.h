@@ -57,6 +57,9 @@ class DrawingContext {
         virtual void close_path() = 0;
         virtual void paint() = 0;
 
+        virtual void solid_line() = 0;
+        virtual void scaled_dashed_line() = 0;
+
         double width() const;
         double height() const;
         virtual void show_page() = 0;

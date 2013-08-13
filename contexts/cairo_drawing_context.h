@@ -63,6 +63,9 @@ class CairoDrawingContext : public DrawingContext {
         virtual void close_path();
         virtual void paint();
 
+        virtual void solid_line();
+        virtual void scaled_dashed_line();
+
     private:
         Cairo::RefPtr<Cairo::Surface> m_surface;
         Cairo::RefPtr<Cairo::Context> m_cr;

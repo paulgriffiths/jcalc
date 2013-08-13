@@ -141,3 +141,25 @@ void CairoDrawingContext::close_path() {
 void CairoDrawingContext::paint() {
     m_cr->paint();
 }
+
+void CairoDrawingContext::solid_line() {
+    const static std::vector<double> solid_dash;
+    m_cr->set_dash(solid_dash, 0);
+}
+
+void CairoDrawingContext::scaled_dashed_line() {
+    std::vector<double> dashes = {7, 2, 2, 2};
+
+    double x = 1;
+    double y = 1;
+
+    m_cr->device_to_user_distance(x, y);
+
+    for ( std::vector<double>::iterator itr = dashes.begin();
+          itr != dashes.end(); ++itr ) {
+        *itr = *itr * x;
+    }
+
+    m_cr->set_dash(dashes, 0);
+}
+

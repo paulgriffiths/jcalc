@@ -64,6 +64,9 @@ class NullDrawingContext : public DrawingContext {
         virtual void close_path() {};
         virtual void paint() {};
 
+        virtual void solid_line() {};
+        virtual void scaled_dashed_line() {};
+
         virtual void show_page() {};
 
 #pragma GCC diagnostic pop
