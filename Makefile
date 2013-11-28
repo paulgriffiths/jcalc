@@ -18,7 +18,9 @@ TESTOUT=unittests
 CXX=g++
 
 # Compiler flags
-CXXFLAGS=-std=c++11 -pedantic -Wall -Wextra -Weffc++
+# CXXFLAGS=-std=c++11 -pedantic -Wall -Wextra -Weffc++
+# Add -stdlib=libc++ for clang
+CXXFLAGS=-std=c++11 -stdlib=libc++ -pedantic -Wall -Wextra -Weffc++
 CXX_POSIX_FLAGS=-Wall -Wextra -Weffc++
 CXX_DEBUG_FLAGS=-ggdb -DDEBUG -DDEBUG_ALL
 CXX_RELEASE_FLAGS=-O3 -DNDEBUG
